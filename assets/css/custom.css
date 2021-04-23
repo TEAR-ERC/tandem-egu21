@@ -1,0 +1,13 @@
+.columns { display: flex; align-items: center; }
+
+.columns_wrap { display: flex; flex-wrap: wrap; align-items: center; text-align: center; }
+
+.column { flex: 1; }
+
+.column50 { flex: 1; min-width: 50%; margin-bottom: 1em; }
+
+.column50 img { max-width: 80% !important; transition: transform 0.25s ease; }
+
+.column50 img:hover { transform: scale(1.1); }
+
+/*# sourceMappingURL=custom.css.map */
