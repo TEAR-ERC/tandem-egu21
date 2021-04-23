@@ -27,4 +27,4 @@ where $$\tau_i = \tau_i^0 + (\delta_{ij}-n_in_j)\sigma_{jk}(\bm{u})n_k$$
 and $$\sigma_n = \sigma^0 + n_i\sigma_{ij}(\bm{u})n_j$$.
 
 
-![seas](/assets/img/seas.svg)
+![seas]({{ 'assets/img/seas.svg' | relative_url }})
