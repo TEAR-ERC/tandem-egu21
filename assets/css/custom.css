@@ -1,6 +1,6 @@
 .columns { display: flex; align-items: center; }
 
-.columns_wrap { display: flex; flex-wrap: wrap; align-items: center; text-align: center; }
+.columns_wrap { display: flex; flex-wrap: wrap; align-items: top; text-align: center; }
 
 .column { flex: 1; }
 
@@ -9,5 +9,7 @@
 .column50 img { max-width: 80% !important; transition: transform 0.25s ease; }
 
 .column50 img:hover { transform: scale(1.1); }
+
+.center-image { margin: 0 auto; display: block; }
 
 /*# sourceMappingURL=custom.css.map */
