@@ -34,10 +34,11 @@ github_username:  uphoffc
 theme: minima
 plugins:
   - jekyll-feed
+  - jekyll/scholar
 
 markdown: kramdown
 kramdown:
-  math_engine: katex
+    math_engine: katex
 
 # Exclude from processing.
 # The following items will not be processed, by default.
