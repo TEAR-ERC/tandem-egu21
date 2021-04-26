@@ -24,13 +24,26 @@
     max-width: 80% !important;
     transition: transform 0.25s ease;
   }
+  margin-bottom: 1em;
+}
+
+.column33 {
+  flex: 1;
+  min-width: 33%;
+  margin-bottom: 1em;
+}
+
+.magnify {
   img:hover {
       transform: scale(1.1);
   }
-  margin-bottom: 1em;
 }
 
 .center-image {
     margin: 0 auto;
     display: block;
+}
+
+.footnote {
+    font-size: 0.7em;
 }
