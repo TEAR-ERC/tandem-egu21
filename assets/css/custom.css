@@ -8,8 +8,12 @@
 
 .column50 img { max-width: 80% !important; transition: transform 0.25s ease; }
 
-.column50 img:hover { transform: scale(1.1); }
+.column33 { flex: 1; min-width: 33%; margin-bottom: 1em; }
+
+.magnify img:hover { transform: scale(1.1); }
 
 .center-image { margin: 0 auto; display: block; }
+
+.footnote { font-size: 0.7em; }
 
 /*# sourceMappingURL=custom.css.map */

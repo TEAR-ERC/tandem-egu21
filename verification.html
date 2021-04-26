@@ -45,9 +45,117 @@
   </header>
 
   <div class="post-content">
-    <p><img src="/tandem-egu21/assets/img/poisson_static_p1_q20_99b54da.png" alt="" />
-<img src="/tandem-egu21/assets/img/seas_tandem_p1_f0436cb.png" alt="" />
-<img src="/tandem-egu21/assets/img/seas_tandem_p1_f0436cb_2.png" alt="" /></p>
+    <p>Here, we verify that our DG implementation achieves high-order convergence.
+We first describe several test problems for the linear elasticity solver,
+present a manufactured test problem for antiplane shear motion second,
+and lastly compare against the SCEC SEAS project.
+All test cases are given and can be reproduced from the
+<a href="https://github.com/TEAR-ERC/tandem/tree/seas/examples">github repository</a>.</p>
+
+<ol id="markdown-toc">
+  <li><a href="#static-test-problems" id="markdown-toc-static-test-problems">Static test problems</a></li>
+  <li><a href="#antiplane-shear-motion" id="markdown-toc-antiplane-shear-motion">Antiplane shear motion</a></li>
+  <li><a href="#scec-seas-project-comparison" id="markdown-toc-scec-seas-project-comparison">SCEC SEAS project comparison</a></li>
+  <li><a href="#references" id="markdown-toc-references">References</a></li>
+</ol>
+
+<h1 id="static-test-problems">Static test problems</h1>
+
+<p>An overview of the problems presented here is given in the following:</p>
+
+<div class="columns_wrap">
+<div class="column33">
+    <p><strong>cosine_variable</strong></p>
+
+    <p><img src="/tandem-egu21/assets/img/cosine_variable.png" alt="cosine_variable" width="80%" /></p>
+
+    <ul>
+      <li>Manufactured solution</li>
+      <li>Heterogeneous material</li>
+      <li>Curved boundary (annulus)</li>
+    </ul>
+  </div>
+<div class="column33">
+    <p><strong>embedded_half</strong></p>
+
+    <p><img src="/tandem-egu21/assets/img/embedded_half.png" alt="embedded_half" width="80%" /></p>
+
+    <ul>
+      <li>Slip boundary condition</li>
+      <li>Mesh is warped by displacement</li>
+    </ul>
+  </div>
+<div class="column33">
+    <p><strong>singular</strong></p>
+
+    <p><img src="/tandem-egu21/assets/img/singular.png" alt="singular" width="80%" /></p>
+
+    <ul>
+      <li>Poisson problem from <a class="citation" href="#riviere2008">(Rivière, 2008)</a></li>
+      <li>Sharp material contrast (checkerboard)</li>
+      <li>Singular gradient at centre</li>
+    </ul>
+  </div>
+</div>
+
+<p>The following log-log plot shows result of a convergence study on the above test problems,
+where <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi></mrow><annotation encoding="application/x-tex">P</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span></span></span></span> is the maximum polynomial degree.</p>
+
+<p><img src="/tandem-egu21/assets/img/poisson_static_p1_q20_99b54da.png" alt="" /></p>
+
+<p>We obtain the expected order of convergence for all three test problems, which is
+(<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">P+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.76666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>) for the first two problems, and 1 for the third problem <a class="citation" href="#riviere2008">(Rivière, 2008)</a>,
+due to a singular gradient at the origin.
+For problem <em>embedded_half</em> the solution is a polynomial of degree 7.
+Therefore, we reach the minimum error already with the highest spatial resolution for
+degrees <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo>=</mo><mn>7</mn><mo separator="true">,</mo><mn>8</mn></mrow><annotation encoding="application/x-tex">P=7,8</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8388800000000001em;vertical-align:-0.19444em;"></span><span class="mord">7</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">8</span></span></span></span>, as the solution is element of the respective finite element spaces.
+For problem <em>singular</em> we can only obtain order 1 convergence but still obtain a lower error
+with higher order schemes.</p>
+
+<h1 id="antiplane-shear-motion">Antiplane shear motion</h1>
+
+<p>There are no known analytic solutions to a SEAS-type problem with rate and state friction.
+We therefore use a <a href="https://github.com/TEAR-ERC/tandem/blob/seas/examples/tandem/2d/mms1.lua">manufactured solution</a> for antiplane shear motion to test our implementation, which is very similar a manufactured solution of
+Erickson and Dunham <a class="citation" href="#erickson2014">(Erickson &amp; Dunham, 2014)</a>.
+The following figure shows a convergence study.
+We choose the adaptive Dormand-Prince scheme for time integration, which is a fifth order Runge-Kutta
+scheme (using 6 right-hand side evaluations) with the fourth order embedded method.</p>
+
+<p><img src="/tandem-egu21/assets/img/seas_tandem_p1_f0436cb.png" alt="" width="80%" class="center-image" /></p>
+
+<p>The results show that our method achieves high-order convergence for SEAS problems, too,
+although the convergence order is apparently limited by the time integrator.</p>
+
+<p>Plotting the error against a metric of work, which is
+the number of degrees of freedom times the number of time-steps times the number of Runge Kutta
+stages, we observe that high-order clearly pays off:</p>
+
+<p><img src="/tandem-egu21/assets/img/seas_tandem_p1_f0436cb_2.png" alt="" width="80%" class="center-image" /></p>
+
+<h1 id="scec-seas-project-comparison">SCEC SEAS project comparison</h1>
+<p>The SCEC SEAS project <a class="citation" href="#erickson2020">(Erickson et al., 2020)</a> aims to verify SEAS models by comparing codes of
+independent groups using different methods on well-defined benchmark problems.
+A <a href="https://strike.scec.org/cvws/seas/">web-based platform</a>
+is provided which allows to upload and compare solutions.
+Tandem solutions for problems BP1-QD and BP3-QD match solutions of other codes very well
+and can be <a href="https://strike.scec.org/cvws/seas/">compared online</a>.</p>
+
+<p>For example, below we show the slip-rate time-series of the BP1-QD problem for the station located at 7.5 km depth.</p>
+
+<p><img src="/tandem-egu21/assets/img/bp1.svg" alt="bp1_comparison" width="100%" /></p>
+
+<p>An advantage of using a discontinuous Galerkin scheme is that meshes can be statically refined
+and we use high-order function spaces.
+For example, the mesh used in the comparison for BP3-QD has an on-fault resolution of 250 m and
+coarsens to 40 km edge-length towards the far boundary, cf. below figure.
+The on-fault resolution is 10x larger than the cell size of 25 m recommended in the benchmark description.</p>
+
+<p><img src="/tandem-egu21/assets/img/bp3_mesh.png" alt="bp3_mesh" width="80%" class="center-image" /></p>
+
+<h1 id="references">References</h1>
+<ol class="bibliography"><li><span id="riviere2008">Rivière, B. (2008). <i>Discontinuous Galerkin Methods for Solving Elliptic and Parabolic Equations</i>. Society for Industrial and Applied Mathematics. https://doi.org/10.1137/1.9780898717440</span></li>
+<li><span id="erickson2014">Erickson, B. A., &amp; Dunham, E. M. (2014). An efficient numerical method for earthquake cycles in heterogeneous media: Alternating subbasin and surface-rupturing events on faults crossing a sedimentary basin. <i>Journal of Geophysical Research: Solid Earth</i>, <i>119</i>(4), 3290–3316. https://doi.org/10.1002/2013JB010614</span></li>
+<li><span id="erickson2020">Erickson, B. A., Jiang, J., Barall, M., Lapusta, N., Dunham, E. M., Harris, R., Abrahams, L. S., Allison, K. L., Ampuero, J. P., Barbot, S., Cattania, C., Elbanna, A., Fialko, Y., Idini, B., Kozdon, J. E., Lambert, V., Liu, Y., Luo, Y., Ma, X., … Wei, M. (2020). The Community Code Verification Exercise for Simulating Sequences of Earthquakes and Aseismic Slip (SEAS). <i>Seismological Research Letters</i>, <i>91</i>(2A), 874–890. https://doi.org/10.1785/0220190248</span></li></ol>
 
   </div>
 
