@@ -56,12 +56,13 @@ A very efficient solver and scalable is therefore mandatory.</p>
 <ol id="markdown-toc">
   <li><a href="#flexible-solvers-using-petsc" id="markdown-toc-flexible-solvers-using-petsc">Flexible solvers using PETSc</a></li>
   <li><a href="#discrete-greens-function" id="markdown-toc-discrete-greens-function">Discrete Green’s function</a></li>
+  <li><a href="#references" id="markdown-toc-references">References</a></li>
 </ol>
 
 <h1 id="flexible-solvers-using-petsc">Flexible solvers using PETSc</h1>
 
 <p>Our implementation is MPI parallel and interfaces to PETSc which allows us to efficiently
-prototype solvers.
+prototype solvers <a class="citation" href="#petsc-web-page">(Balay et al., 2021; Balay et al., 2021; Balay et al., 1997)</a>.
 We focus on the following three types of solvers:</p>
 
 <ol>
@@ -153,6 +154,12 @@ Hence, this approach is attractive if <span class="katex"><span class="katex-mat
   <li>After pre-computation of the <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold-italic">G</mi></mrow><annotation encoding="application/x-tex">\bm{G}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68611em;vertical-align:0em;"></span><span class="mord"><span class="mord"><span class="mord boldsymbol">G</span></span></span></span></span></span>-vectors, the complexity of this method is comparable to the a boundary element method for non-planar fault geometry, but without the need for an analytic Green’s function. That is, there is no limitation to “simple” material variations.</li>
   <li>The time-to-solution for the full BP3-QD benchmark problem is reduced from about 1 week run-time to about 3 hours using this method.</li>
 </ol>
+
+<h1 id="references">References</h1>
+
+<ol class="bibliography"><li><span id="petsc-web-page">Balay, S., Abhyankar, S., Adams, M. F., Brown, J., Brune, P., Buschelman, K., Dalcin, L., Dener, A., Eijkhout, V., Gropp, W. D., Karpeyev, D., Kaushik, D., Knepley, M. G., May, D. A., McInnes, L. C., Mills, R. T., Munson, T., Rupp, K., Sanan, P., … Zhang, H. (2021). <i>PETSc Web page</i>. https://www.mcs.anl.gov/petsc</span></li>
+<li><span id="petsc-user-ref">Balay, S., Abhyankar, S., Adams, M. F., Brown, J., Brune, P., Buschelman, K., Dalcin, L., Dener, A., Eijkhout, V., Gropp, W. D., Karpeyev, D., Kaushik, D., Knepley, M. G., May, D. A., McInnes, L. C., Mills, R. T., Munson, T., Rupp, K., Sanan, P., … Zhang, H. (2021). <i>PETSc Users Manual</i> (ANL-95/11 - Revision 3.15; Number ANL-95/11 - Revision 3.15). Argonne National Laboratory. https://www.mcs.anl.gov/petsc</span></li>
+<li><span id="petsc-efficient">Balay, S., Gropp, W. D., McInnes, L. C., &amp; Smith, B. F. (1997). Efficient Management of Parallelism in Object Oriented Numerical Software Libraries. In E. Arge, A. M. Bruaset, &amp; H. P. Langtangen (Eds.), <i>Modern Software Tools in Scientific Computing</i> (pp. 163–202). Birkhäuser Press.</span></li></ol>
 
   </div>
 
