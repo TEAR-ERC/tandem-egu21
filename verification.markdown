@@ -9,7 +9,7 @@ We first describe several test problems for the linear elasticity solver,
 present a manufactured test problem for antiplane shear motion second,
 and lastly compare against the SCEC SEAS project.
 All test cases are given and can be reproduced from the
-[github repository](https://github.com/TEAR-ERC/tandem/tree/seas/examples).
+[github repository](https://github.com/TEAR-ERC/tandem/tree/55de706f528dedfe2ad8734dac25365faddecb95/examples).
 
 1. TOC
 {:toc}
@@ -66,7 +66,9 @@ Antiplane shear motion
 ======================
 
 There are no known analytic solutions to a SEAS-type problem with rate and state friction.
-We therefore use a [manufactured solution](https://github.com/TEAR-ERC/tandem/blob/seas/examples/tandem/2d/mms1.lua) for antiplane shear motion to test our implementation, which is very similar a manufactured solution of
+We therefore use a
+[manufactured solution](https://github.com/TEAR-ERC/tandem/blob/55de706f528dedfe2ad8734dac25365faddecb95/examples/tandem/2d/mms1.lua)
+for antiplane shear motion to test our implementation, which is very similar a manufactured solution of
 Erickson and Dunham {% cite erickson2014 %}.
 The following figure shows a convergence study.
 We choose the adaptive Dormand-Prince scheme for time integration, which is a fifth order Runge-Kutta
