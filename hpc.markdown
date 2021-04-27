@@ -20,7 +20,7 @@ Flexible solvers using PETSc
 ============================
 
 Our implementation is MPI parallel and interfaces to PETSc which allows us to efficiently
-prototype solvers.
+prototype solvers {% cite petsc-web-page petsc-user-ref petsc-efficient %}.
 We focus on the following three types of solvers:
 
 1. Direct sparse LU (e.g. MUMPS, PARDISO)
@@ -87,3 +87,8 @@ On the other hand:
 2. The approach is simple to implement and orthogonal to solver or performance optimisation.
 3. After pre-computation of the $$\bm{G}$$-vectors, the complexity of this method is comparable to the a boundary element method for non-planar fault geometry, but without the need for an analytic Green's function. That is, there is no limitation to "simple" material variations.
 4. The time-to-solution for the full BP3-QD benchmark problem is reduced from about 1 week run-time to about 3 hours using this method.
+
+References
+==========
+
+{% bibliography --cited %}

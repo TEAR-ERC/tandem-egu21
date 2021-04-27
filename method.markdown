@@ -152,7 +152,7 @@ The evaluation of the right-hand side of above system of ODEs proceeds as follow
 
 Given that we may evaluate the right-hand side, we can apply any explicit time-stepping to
 the system of ODEs.
-We use the TS module from PETSc, in particular the adaptive Runge-Kutta schemes
+We use the TS module from PETSc {% cite abhyankar2018petsc %}, in particular the adaptive Runge-Kutta schemes
 [3bs, 5dp, or 8vr](https://www.mcs.anl.gov/petsc/petsc-current/docs/manualpages/TS/TSRKType.html).
 
 References

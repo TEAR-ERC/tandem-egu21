@@ -5,7 +5,7 @@ permalink: /seas
 ---
 
 SEAS models capture the entire earthquake cycle, i.e. tectonic loading, nucleation, rupture,
-and afterslip, within one physical model.
+and afterslip, within one physical model {% cite erickson2020 %}.
 A fault is idealized as an infinitesimally thin fault surface embedded in linear elastic media,
 and on-fault behaviour is described via laboratory-derived rate and state friction laws.
 Friction couples the slip $$S$$, normal stress $$\sigma_n$$, and shear
