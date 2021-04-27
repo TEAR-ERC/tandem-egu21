@@ -120,10 +120,10 @@ The operator $$A$$ stays constant throughout the whole earthquake cycle.
 On-fault tractions depend linearly on the displacement $$\bm{u}$$, therefore one can abstractly write
 
 $$
-    \bm{\tau}(\bm{u}) = CA^{-1}\bm{b}(\bm{S}, t)
+    [\sigma_n(\bm{u}), \tau(\bm{u})] = CA^{-1}\bm{b}(\bm{S}, t)
 $$
 
-As a similar relationship hold for the normal stress, the friction relations become
+Hence, the friction relations become
 
 $$
 \begin{aligned}
@@ -140,7 +140,7 @@ Therefore, the slip-rate is a function of slip, state, and time, and we obtain t
 $$
 \begin{aligned}
     \frac{dS_i}{dt} &= V_i(\bm{S}, t, \psi)\\
-    \frac{d\psi}{dt} &= g(|V|(\bm{S}, t, \psi),\psi)\\
+    \frac{d\psi}{dt} &= g(|V(\bm{S}, t, \psi)|,\psi)\\
 \end{aligned}
 $$
 
