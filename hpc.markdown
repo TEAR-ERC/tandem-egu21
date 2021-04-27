@@ -24,7 +24,7 @@ prototype solvers {% cite petsc-web-page petsc-user-ref petsc-efficient %}.
 We focus on the following three types of solvers:
 
 1. Direct sparse LU (e.g. MUMPS, PARDISO)
-2. GMRES with two-level deflation preconditioner, where eigenvalues and eigenvectors are obtained through a randomised algorithm
+2. GMRES with two-level deflation preconditioner, where the eigendecomposition is computed via Randomised Linear Algebra (RLA)
 3. Conjugate gradients with P-multigrid preconditioner
 
 Direct sparse solvers are inherently serial and consume large amounts of memory.
