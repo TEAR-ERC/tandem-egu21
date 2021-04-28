@@ -45,7 +45,7 @@
   </header>
 
   <div class="post-content">
-    <p>Here, we verify that our DG implementation achieves high-order convergence.
+    <p>We verify that our DG implementation achieves high-order convergence.
 We first describe several test problems for the linear elasticity solver,
 present a manufactured test problem for antiplane shear motion second,
 and lastly compare against the SCEC SEAS project.
@@ -82,7 +82,7 @@ All test cases are given and can be reproduced from the
 
     <ul>
       <li>Slip boundary condition</li>
-      <li>Mesh is warped by displacement</li>
+      <li>Mesh is warped by displacement in figure</li>
     </ul>
   </div>
 <div class="column33">
@@ -107,7 +107,7 @@ where <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.
 (<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">P+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.76666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>) for the first two problems, and 1 for the third problem <a class="citation" href="#riviere2008">(Rivière, 2008)</a>,
 due to a singular gradient at the origin.
 For problem <em>embedded_half</em> the solution is a polynomial of degree 7.
-Therefore, we reach the minimum error already with the highest spatial resolution for
+Therefore, we reach the minimum error already with <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>h</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">h=1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">h</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span> for
 degrees <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo>=</mo><mn>7</mn><mo separator="true">,</mo><mn>8</mn></mrow><annotation encoding="application/x-tex">P=7,8</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8388800000000001em;vertical-align:-0.19444em;"></span><span class="mord">7</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">8</span></span></span></span>, as the solution is element of the respective finite element spaces.
 For problem <em>singular</em> we can only obtain order 1 convergence but still obtain a lower error
 with higher order schemes.</p>
@@ -117,7 +117,7 @@ with higher order schemes.</p>
 <p>There are no known analytic solutions to a SEAS-type problem with rate and state friction.
 We therefore use a
 <a href="https://github.com/TEAR-ERC/tandem/blob/55de706f528dedfe2ad8734dac25365faddecb95/examples/tandem/2d/mms1.lua">manufactured solution</a>
-for antiplane shear motion to test our implementation, which is very similar a manufactured solution of
+for antiplane shear motion to test our implementation, which is very similar to a manufactured solution of
 Erickson and Dunham <a class="citation" href="#erickson2014">(Erickson &amp; Dunham, 2014)</a>.
 The following figure shows a convergence study.
 We choose the adaptive Dormand-Prince scheme for time integration, which is a fifth order Runge-Kutta

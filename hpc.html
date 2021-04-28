@@ -51,7 +51,7 @@ is the solution of a linear system of equations.
 Due to <a href="/tandem-egu21/seas#seas-example">high variability in time-step size</a>
 and the potentially long simulated time of thousands of years, millions of time-steps
 may be required, where each time-step needs several stages, i.e. multiple solves per time-step.
-A very efficient solver and scalable is therefore mandatory.</p>
+A very efficient and scalable solver is therefore mandatory.</p>
 
 <ol id="markdown-toc">
   <li><a href="#flexible-solvers-using-petsc" id="markdown-toc-flexible-solvers-using-petsc">Flexible solvers using PETSc</a>    <ol>
@@ -72,7 +72,7 @@ We focus on the following three types of solvers:</p>
 
 <ol>
   <li>Direct sparse LU (e.g. MUMPS, PARDISO)</li>
-  <li>GMRES with two-level deflation preconditioner, where the eigendecomposition is computed via Randomised Linear Algebra (RLA)</li>
+  <li>GMRES with two-level deflation preconditioner, where the eigendecomposition is computed via Randomised Linear Algebra</li>
   <li>Conjugate gradients with P-multigrid preconditioner</li>
 </ol>
 
@@ -124,8 +124,8 @@ The experiments are executed on an AMD EPYC 7662 processor.</p>
 </table>
 
 <p>The LU decomposition requires a huge setup time.
-Moreover, we observed that on the finest grid the LU decomposition required more than
-100 GB of memory.
+Moreover, we observe that the LU decomposition requires more than
+100 GB of memory on the finest grid.
 Nevertheless, we can re-use the LU millions of times in a SEAS simulation, such that
 LU is still competitive due to its low solve time.</p>
 
