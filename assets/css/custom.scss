@@ -102,3 +102,43 @@ $on-laptop:        800px !default;
     }
   }
 }
+
+.box-16-9 {
+    //width: 100vw;
+    //height: calc(100vw * 9 / 16);
+    //overflow: hidden;
+}
+
+.live-wrapper {
+    h2 {
+        margin-bottom: 0;
+    }
+    padding: 0 2em;
+    .column1, .column2 {
+        text-align: left;
+        flex: 1;
+        img {
+            margin: 0 auto;
+            display: block;
+            height: calc(36vw * 9 / 16);
+            text-align: center;
+        }
+        margin-bottom: 1.5em;
+    }
+    .column1 {
+        min-width: 50%;
+    }
+    .column2 {
+        min-width: 50%;
+    }
+
+    .columns-wrap {
+        margin-top: 0;
+    }
+}
+
+.virtual-display-link {
+    padding: 0.3em;
+    text-align: center;
+    border: 3px black solid;
+}
