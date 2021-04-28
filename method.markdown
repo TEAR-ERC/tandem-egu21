@@ -26,16 +26,16 @@ are given by {% cite riviere2008 %}
 $$
 \begin{aligned}
     a_{\eta}(\bm{u},\bm{w}) &= \sum_{E\in\mathcal{T}_h} \int_E
-        c_{ijkl} \epsilon_{kl}(\bm{u}) \epsilon_{ij}(\bm{w})
+        c_{ijkl} \varepsilon_{kl}(\bm{u}) \varepsilon_{ij}(\bm{w})
     d\bm{x} \\
     &+ \sum_{e\in\Gamma_i\cup\Gamma_D} \int_e
-        - \{\!\{c_{ijkl}\epsilon_{kl}(\bm{u})n_j^e\}\!\}\llbracket w_i\rrbracket
-        - \{\!\{c_{ijkl}\epsilon_{kl}(\bm{w})n_j^e\}\!\}\llbracket u_i\rrbracket
+        - \{\!\{c_{ijkl}\varepsilon_{kl}(\bm{u})n_j^e\}\!\}\llbracket w_i\rrbracket
+        - \{\!\{c_{ijkl}\varepsilon_{kl}(\bm{w})n_j^e\}\!\}\llbracket u_i\rrbracket
         + \delta_e\llbracket u_i\rrbracket\llbracket w_i\rrbracket
     ds, \\
     L(\bm{w}) &= \sum_{E\in\mathcal{T}_h} \int_E F_i w_i d\bm{x}
         + \sum_{e\in\Gamma_D} \int_e
-            - c_{ijkl}\epsilon_{kl}(\bm{w})n_j^e g_i
+            - c_{ijkl}\varepsilon_{kl}(\bm{w})n_j^e g_i
             + \delta_e w_ig_i
         ds.
 \end{aligned}
@@ -54,7 +54,7 @@ $$
 \begin{aligned}
     \{\!\{\hat{u}_i\}\!\} &= \{\!\{u_i\}\!\} \\
     \llbracket \hat{u}_i\rrbracket &= 0 \\
-    \hat{\sigma}_{ij} &= \{\!\{c_{ijrs}\epsilon_{rs}\}\!\} - \delta_e\llbracket u_i\rrbracket n_j \\
+    \hat{\sigma}_{ij} &= \{\!\{c_{ijrs}\varepsilon_{rs}\}\!\} - \delta_e\llbracket u_i\rrbracket n_j \\
 \end{aligned}
 $$
 
@@ -63,8 +63,8 @@ A slip boundary condition is implemented equating the jump in $$\hat{u}$$ to sli
 $$
 \begin{aligned}
     \{\!\{\hat{u}_i\}\!\} &= \{\!\{u_i\}\!\} \\
-    \llbracket \hat{u}_i\rrbracket &= T_{ij}S_j \\
-    \hat{\sigma}_{ij} &= \{\!\{c_{ijrs}\epsilon_{rs}\}\!\} - \delta_e(\llbracket u_i\rrbracket-T_{ij}S_j) n_j \\
+    \llbracket \hat{u}_i\rrbracket &= T_{ik}S_k \\
+    \hat{\sigma}_{ij} &= \{\!\{c_{ijrs}\varepsilon_{rs}\}\!\} - \delta_e(\llbracket u_i\rrbracket-T_{ik}S_k) n_j \\
 \end{aligned}
 $$
 
@@ -74,13 +74,13 @@ and modify the right-hand side as shown in the following:
 $$
 \tilde{L}(\bm{w}) = L(\bm{w})
         + \sum_{e\in\Gamma_F} \int_e
-            - \{\!\{c_{ijkl}\epsilon_{kl}(\bm{w})n_j^e\}\!\} T_{ij}S_{ij}
-            + \delta_e \llbracket w_i\rrbracket T_{ij}S_{ij}
+            - \{\!\{c_{ijkl}\varepsilon_{kl}(\bm{w})n_j^e\}\!\} T_{ik}S_{k}
+            + \delta_e \llbracket w_i\rrbracket T_{ik}S_{k}
         ds.
 
 $$
 
-DG Implementation
+DG implementation
 =================
 
 We make the following implementation choices:
@@ -117,10 +117,11 @@ $$
 
 The on-fault slip and time only affect the right-hand side $$\bm{b}$$ of the linear system of equations.
 The operator $$A$$ stays constant throughout the whole earthquake cycle.
-On-fault tractions depend linearly on the displacement $$\bm{u}$$, therefore one can abstractly write
+On-fault tractions depend linearly on the displacement $$\bm{u}$$ via a coupling matrix $$C$$,
+therefore one can abstractly write
 
 $$
-    [\sigma_n(\bm{u}), \tau(\bm{u})] = CA^{-1}\bm{b}(\bm{S}, t)
+    [\sigma_n(\bm{S}, t), \tau(\bm{S}, t)] = CA^{-1}\bm{b}(\bm{S}, t)
 $$
 
 Hence, the friction relations become
@@ -148,7 +149,7 @@ The evaluation of the right-hand side of above system of ODEs proceeds as follow
 
 1. Set slip boundary condition and solve linear elasticity problem.
 2. Solve non-linear friction relation for slip-rate (locally for each on-fault node).
-3. Evaluate state evolution equation with computed slip-rate.
+3. Evaluate right-hand side of the system of ODEs with computed slip-rates.
 
 Given that we may evaluate the right-hand side, we can apply any explicit time-stepping to
 the system of ODEs.

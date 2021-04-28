@@ -75,9 +75,7 @@ $$
 $$
 
 ($$F$$: body force, $$c$$: stiffness tensor,
-$$\delta$$: Kronecker symbol,
-$$n$$: unit normal
-)
+$$n$$: unit normal)
 </div>
 <div class="column50" markdown="1">
 **Rate and state friction on $$\Gamma_F$$**
@@ -92,10 +90,8 @@ $$
 \end{aligned}
 $$
 
-($$T$$: $$(D-1)\times D$$, $$c$$: stiffness tensor,
-$$\delta$$: Kronecker symbol,
-$$n$$: unit normal
-)
+($$\delta$$: Kronecker symbol,
+$$n$$: unit normal)
 </div>
 </div>
 

@@ -4,7 +4,7 @@ title: Verification
 permalink: /verification
 ---
 
-Here, we verify that our DG implementation achieves high-order convergence.
+We verify that our DG implementation achieves high-order convergence.
 We first describe several test problems for the linear elasticity solver,
 present a manufactured test problem for antiplane shear motion second,
 and lastly compare against the SCEC SEAS project.
@@ -35,7 +35,7 @@ An overview of the problems presented here is given in the following:
 ![embedded_half]({{ '/assets/img/embedded_half.png' | relative_url }}){: width="80%" }
 
 * Slip boundary condition
-* Mesh is warped by displacement 
+* Mesh is warped by displacement in figure
 </div>
 <div class="column33" markdown="1">
 **singular**
@@ -57,7 +57,7 @@ We obtain the expected order of convergence for all three test problems, which i
 ($$P+1$$) for the first two problems, and 1 for the third problem {% cite riviere2008 %},
 due to a singular gradient at the origin.
 For problem *embedded_half* the solution is a polynomial of degree 7.
-Therefore, we reach the minimum error already with the highest spatial resolution for
+Therefore, we reach the minimum error already with $$h=1$$ for
 degrees $$P=7,8$$, as the solution is element of the respective finite element spaces.
 For problem *singular* we can only obtain order 1 convergence but still obtain a lower error
 with higher order schemes.
@@ -68,7 +68,7 @@ Antiplane shear motion
 There are no known analytic solutions to a SEAS-type problem with rate and state friction.
 We therefore use a
 [manufactured solution](https://github.com/TEAR-ERC/tandem/blob/55de706f528dedfe2ad8734dac25365faddecb95/examples/tandem/2d/mms1.lua)
-for antiplane shear motion to test our implementation, which is very similar a manufactured solution of
+for antiplane shear motion to test our implementation, which is very similar to a manufactured solution of
 Erickson and Dunham {% cite erickson2014 %}.
 The following figure shows a convergence study.
 We choose the adaptive Dormand-Prince scheme for time integration, which is a fifth order Runge-Kutta

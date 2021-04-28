@@ -10,7 +10,7 @@ is the solution of a linear system of equations.
 Due to [high variability in time-step size]({{ '/seas#seas-example' | relative_url}})
 and the potentially long simulated time of thousands of years, millions of time-steps
 may be required, where each time-step needs several stages, i.e. multiple solves per time-step.
-A very efficient solver and scalable is therefore mandatory.
+A very efficient and scalable solver is therefore mandatory.
 
 
 1. TOC
@@ -24,7 +24,7 @@ prototype solvers {% cite petsc-web-page petsc-user-ref petsc-efficient %}.
 We focus on the following three types of solvers:
 
 1. Direct sparse LU (e.g. MUMPS, PARDISO)
-2. GMRES with two-level deflation preconditioner, where the eigendecomposition is computed via Randomised Linear Algebra (RLA)
+2. GMRES with two-level deflation preconditioner, where the eigendecomposition is computed via Randomised Linear Algebra
 3. Conjugate gradients with P-multigrid preconditioner
 
 We present small-scale numerical experiments for a
@@ -47,8 +47,8 @@ We obtained the following results on a single core:
 {: .autowidth }
 
 The LU decomposition requires a huge setup time.
-Moreover, we observed that on the finest grid the LU decomposition required more than
-100 GB of memory.
+Moreover, we observe that the LU decomposition requires more than
+100 GB of memory on the finest grid.
 Nevertheless, we can re-use the LU millions of times in a SEAS simulation, such that
 LU is still competitive due to its low solve time.
 
