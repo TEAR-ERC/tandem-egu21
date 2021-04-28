@@ -54,7 +54,12 @@ may be required, where each time-step needs several stages, i.e. multiple solves
 A very efficient solver and scalable is therefore mandatory.</p>
 
 <ol id="markdown-toc">
-  <li><a href="#flexible-solvers-using-petsc" id="markdown-toc-flexible-solvers-using-petsc">Flexible solvers using PETSc</a></li>
+  <li><a href="#flexible-solvers-using-petsc" id="markdown-toc-flexible-solvers-using-petsc">Flexible solvers using PETSc</a>    <ol>
+      <li><a href="#sparse-lu-mumps" id="markdown-toc-sparse-lu-mumps">Sparse LU (MUMPS)</a></li>
+      <li><a href="#two-level-deflation" id="markdown-toc-two-level-deflation">Two-level deflation</a></li>
+      <li><a href="#p-multigrid" id="markdown-toc-p-multigrid">P-multigrid</a></li>
+    </ol>
+  </li>
   <li><a href="#discrete-greens-function" id="markdown-toc-discrete-greens-function">Discrete Green’s function</a></li>
   <li><a href="#references" id="markdown-toc-references">References</a></li>
 </ol>
@@ -71,17 +76,283 @@ We focus on the following three types of solvers:</p>
   <li>Conjugate gradients with P-multigrid preconditioner</li>
 </ol>
 
-<p>Direct sparse solvers are inherently serial and consume large amounts of memory.
-Nevertheless, they are still competitive as the LU decomposition needs to be done only once.</p>
+<p>We present small-scale numerical experiments for a
+<a href="https://github.com/TEAR-ERC/tandem/blob/3685e76425da4ae13b190f22d301b70acb416252/examples/elasticity/3d/cosine.lua"><strong>3D</strong> elasticity problem on the unit box</a>.
+The polynomial degree is fixed to <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo>=</mo><mn>6</mn></mrow><annotation encoding="application/x-tex">P=6</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">6</span></span></span></span> in all experiments and the relative tolerance is set
+to <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><msup><mn>0</mn><mrow><mo>−</mo><mn>8</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{-8}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">−</span><span class="mord mtight">8</span></span></span></span></span></span></span></span></span></span></span></span>.
+The experiments are executed on an AMD EPYC 7662 processor.</p>
 
-<p>Our experiments indicate that the two-level deflation algorithm is weakly scalable,
-but the number of eigenvectors needs to grow with number of ranks.
-The latter might be a scalability bottleneck due to the high cost of computing eigenvectors.</p>
+<h2 id="sparse-lu-mumps">Sparse LU (MUMPS)</h2>
 
-<p>A promising candidate is the P-multigrid method, as it may be combined with direct sparse solvers,
-the two-level deflation preconditioner, and also algebraic multi-grid. In particular
-with very high-orders the coarse-grid problem becomes very small in comparison to the finest grid,
-e.g. for <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo>=</mo><mn>8</mn></mrow><annotation encoding="application/x-tex">P=8</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">8</span></span></span></span> the number of dofs in the coarse grid problem is 45x smaller in 2D and 165x smaller in 3D.</p>
+<p>We obtained the following results on a single core:</p>
+
+<table class="autowidth">
+  <thead>
+    <tr>
+      <th style="text-align: right">Resolution</th>
+      <th style="text-align: right">DOFs</th>
+      <th style="text-align: right">Setup time</th>
+      <th style="text-align: right">Solve time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: right">1.000</td>
+      <td style="text-align: right">1260</td>
+      <td style="text-align: right">0.1505s</td>
+      <td style="text-align: right">0.001098s</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">0.500</td>
+      <td style="text-align: right">10080</td>
+      <td style="text-align: right">3.649s</td>
+      <td style="text-align: right">0.02512s</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">0.250</td>
+      <td style="text-align: right">80640</td>
+      <td style="text-align: right">159.9s</td>
+      <td style="text-align: right">0.5515s</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">0.125</td>
+      <td style="text-align: right">645120</td>
+      <td style="text-align: right">6545s</td>
+      <td style="text-align: right">6.469s</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The LU decomposition requires a huge setup time.
+Moreover, we observed that on the finest grid the LU decomposition required more than
+100 GB of memory.
+Nevertheless, we can re-use the LU millions of times in a SEAS simulation, such that
+LU is still competitive due to its low solve time.</p>
+
+<h2 id="two-level-deflation">Two-level deflation</h2>
+
+<p>The LU decomposition will very likely not scale to very large problems due to its huge memory
+requirement and its serial nature.
+One way to scale direct methods are iterative domain decomposition methods, where a direct solver is
+used to solve the elasticity problem on subdomains.</p>
+
+<p>Here, we test a multiplicative two-level method, where on the first level the smallest eigenvalues
+are deflated, and on the second level an additive Schwarz method is used (PC type asm in PETSc).
+In the following table of results, 64 eigenvalues are deflated, where the eigenvalues are
+obtained via a randomised linear algebra.</p>
+
+<table class="autowidth">
+  <thead>
+    <tr>
+      <th style="text-align: right">Ranks</th>
+      <th style="text-align: right">Resolution</th>
+      <th style="text-align: right">Setup time</th>
+      <th style="text-align: right">Solve time</th>
+      <th style="text-align: right">Iterations</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: right">1</td>
+      <td style="text-align: right">0.25</td>
+      <td style="text-align: right">542.8s</td>
+      <td style="text-align: right">0.7187s</td>
+      <td style="text-align: right">1</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">2</td>
+      <td style="text-align: right">0.25</td>
+      <td style="text-align: right">573.8s</td>
+      <td style="text-align: right">2.643s</td>
+      <td style="text-align: right">6</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">4</td>
+      <td style="text-align: right">0.25</td>
+      <td style="text-align: right">1266s</td>
+      <td style="text-align: right">6.738s</td>
+      <td style="text-align: right">14</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">8</td>
+      <td style="text-align: right">0.25</td>
+      <td style="text-align: right">1666s</td>
+      <td style="text-align: right">25.98s</td>
+      <td style="text-align: right">16</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">16</td>
+      <td style="text-align: right">0.25</td>
+      <td style="text-align: right">2184s</td>
+      <td style="text-align: right">40.11s</td>
+      <td style="text-align: right">20</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">32</td>
+      <td style="text-align: right">0.25</td>
+      <td style="text-align: right">1489s</td>
+      <td style="text-align: right">28.67s</td>
+      <td style="text-align: right">23</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">64</td>
+      <td style="text-align: right">0.25</td>
+      <td style="text-align: right">1643s</td>
+      <td style="text-align: right">46.49s</td>
+      <td style="text-align: right">20</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The solve times are not competitive to sparse LU, although the total time for a single solve
+is lower.</p>
+
+<h2 id="p-multigrid">P-multigrid</h2>
+
+<p>In the P-multigrid method coarse grids are constructed by reducing the polynomial degree.
+In this experiment, we use P-levels 6, 3, and 1, and use the sparse LU solver on the coarsest grid. 
+On a single core we obtain the following results:</p>
+
+<table class="autowidth">
+  <thead>
+    <tr>
+      <th style="text-align: right">Resolution</th>
+      <th style="text-align: right">DOFs</th>
+      <th style="text-align: right">Setup time</th>
+      <th style="text-align: right">Solve time</th>
+      <th style="text-align: right">Iterations</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: right">1.0000</td>
+      <td style="text-align: right">1260</td>
+      <td style="text-align: right">0.2317s</td>
+      <td style="text-align: right">0.146s</td>
+      <td style="text-align: right">11</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">0.5000</td>
+      <td style="text-align: right">10080</td>
+      <td style="text-align: right">2.521s</td>
+      <td style="text-align: right">2.179s</td>
+      <td style="text-align: right">19</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">0.2500</td>
+      <td style="text-align: right">80640</td>
+      <td style="text-align: right">23.51s</td>
+      <td style="text-align: right">25.46s</td>
+      <td style="text-align: right">22</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">0.1250</td>
+      <td style="text-align: right">645120</td>
+      <td style="text-align: right">195.6s</td>
+      <td style="text-align: right">171.2s</td>
+      <td style="text-align: right">22</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">0.0625</td>
+      <td style="text-align: right">5160960</td>
+      <td style="text-align: right">1717s</td>
+      <td style="text-align: right">1111s</td>
+      <td style="text-align: right">21</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>We observe that the number of iterations stays almost constant (except for the smallest case,
+where fewer iterations are required).</p>
+
+<p>The P-multigrid is well-suited for parallelisation.
+We scale the <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>h</mi><mo>=</mo><mn>0.125</mn></mrow><annotation encoding="application/x-tex">h=0.125</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">h</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">1</span><span class="mord">2</span><span class="mord">5</span></span></span></span> mesh from 1 to 32 cores in the following experiment
+for two different implementation: Assembled (AS) uses assembled matrices on each level,
+Matrix-free (MF) uses a matrix-free operator application on the finest level.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Type</th>
+      <th style="text-align: left">Variable</th>
+      <th style="text-align: right">1</th>
+      <th style="text-align: right">2</th>
+      <th style="text-align: right">4</th>
+      <th style="text-align: right">8</th>
+      <th style="text-align: right">16</th>
+      <th style="text-align: right">32</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">AS</td>
+      <td style="text-align: left">solve</td>
+      <td style="text-align: right">271.1s</td>
+      <td style="text-align: right">148.9s</td>
+      <td style="text-align: right">87.1s</td>
+      <td style="text-align: right">72.41s</td>
+      <td style="text-align: right">72.3s</td>
+      <td style="text-align: right">40.15s</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">speed-up</td>
+      <td style="text-align: right">1x</td>
+      <td style="text-align: right">1.8x</td>
+      <td style="text-align: right">3.1x</td>
+      <td style="text-align: right">3.7x</td>
+      <td style="text-align: right">3.7x</td>
+      <td style="text-align: right">6.8x</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">MF</td>
+      <td style="text-align: left">solve</td>
+      <td style="text-align: right">169.9s</td>
+      <td style="text-align: right">100.6s</td>
+      <td style="text-align: right">48.69s</td>
+      <td style="text-align: right">26.1s</td>
+      <td style="text-align: right">16.96s</td>
+      <td style="text-align: right">9.843s</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">speed-up</td>
+      <td style="text-align: right">1x</td>
+      <td style="text-align: right">1.7x</td>
+      <td style="text-align: right">3.5x</td>
+      <td style="text-align: right">6.5x</td>
+      <td style="text-align: right">10x</td>
+      <td style="text-align: right">17x</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">fine-grid GFLOPS</td>
+      <td style="text-align: right">21.5</td>
+      <td style="text-align: right">42.6</td>
+      <td style="text-align: right">83.7</td>
+      <td style="text-align: right">162</td>
+      <td style="text-align: right">328</td>
+      <td style="text-align: right">635</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>We observe that the matrix-free variant outperforms the assembled variant.
+While an operator application with the matrix-free variant requires more floating point operations
+than an operator application with an assembled matrix, it can make better use of modern hardware,
+which is strongly biased towards compute-intensive workloads.</p>
+
+<p>The performance of the matrix-free operator is measured in isolation, by applying the operator
+a hundred times on random data.
+On a single core we measure 21.5 GFLOPS, which corresponds to 41–67% of the theoretical peak
+performance (in the frequency range of 2–3.3 GHz). 
+On 32 cores we measure 635 GFLOPS or 38–64% of the theoretical peak.
+The matrix-free operator is implemented using Yet Another Tensor Toolbox <a class="citation" href="#Uphoff2020">(Uphoff &amp; Bader, 2020)</a>.</p>
+
+<p>The coarse grid solve is likely the bottleneck of P-multigrid when scaling the method
+to more cores.
+In future work, we are going to consider other coarse grid solvers, such as the two-level
+deflation method or algebraic multi-grid.</p>
 
 <h1 id="discrete-greens-function">Discrete Green’s function</h1>
 
@@ -159,7 +430,8 @@ Hence, this approach is attractive if <span class="katex"><span class="katex-mat
 
 <ol class="bibliography"><li><span id="petsc-web-page">Balay, S., Abhyankar, S., Adams, M. F., Brown, J., Brune, P., Buschelman, K., Dalcin, L., Dener, A., Eijkhout, V., Gropp, W. D., Karpeyev, D., Kaushik, D., Knepley, M. G., May, D. A., McInnes, L. C., Mills, R. T., Munson, T., Rupp, K., Sanan, P., … Zhang, H. (2021). <i>PETSc Web page</i>. https://www.mcs.anl.gov/petsc</span></li>
 <li><span id="petsc-user-ref">Balay, S., Abhyankar, S., Adams, M. F., Brown, J., Brune, P., Buschelman, K., Dalcin, L., Dener, A., Eijkhout, V., Gropp, W. D., Karpeyev, D., Kaushik, D., Knepley, M. G., May, D. A., McInnes, L. C., Mills, R. T., Munson, T., Rupp, K., Sanan, P., … Zhang, H. (2021). <i>PETSc Users Manual</i> (ANL-95/11 - Revision 3.15; Number ANL-95/11 - Revision 3.15). Argonne National Laboratory. https://www.mcs.anl.gov/petsc</span></li>
-<li><span id="petsc-efficient">Balay, S., Gropp, W. D., McInnes, L. C., &amp; Smith, B. F. (1997). Efficient Management of Parallelism in Object Oriented Numerical Software Libraries. In E. Arge, A. M. Bruaset, &amp; H. P. Langtangen (Eds.), <i>Modern Software Tools in Scientific Computing</i> (pp. 163–202). Birkhäuser Press.</span></li></ol>
+<li><span id="petsc-efficient">Balay, S., Gropp, W. D., McInnes, L. C., &amp; Smith, B. F. (1997). Efficient Management of Parallelism in Object Oriented Numerical Software Libraries. In E. Arge, A. M. Bruaset, &amp; H. P. Langtangen (Eds.), <i>Modern Software Tools in Scientific Computing</i> (pp. 163–202). Birkhäuser Press.</span></li>
+<li><span id="Uphoff2020">Uphoff, C., &amp; Bader, M. (2020). Yet Another Tensor Toolbox for Discontinuous Galerkin Methods and Other Applications. <i>ACM Trans. Math. Softw.</i>, <i>46</i>(4). https://doi.org/10.1145/3406835</span></li></ol>
 
   </div>
 

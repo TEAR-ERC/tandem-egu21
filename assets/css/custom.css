@@ -16,4 +16,24 @@
 
 .footnote { font-size: 0.7em; }
 
+table { border-width: 0.15em 0; border-color: black; }
+
+table tr:nth-child(even) { background: none; }
+
+table td { border: 0; }
+
+table th { border-width: thin 0; border-color: black; background: none; }
+
+table th, table td { padding: 0.4em 0.8em; }
+
+.autowidth { width: auto; margin-left: auto; margin-right: auto; }
+
+.post-content h1 { font-size: 28px; }
+
+@media screen and (max-width: 800px) { .post-content h1 { font-size: 24px; } }
+
+.post-content h2 { font-size: 20px; }
+
+@media screen and (max-width: 800px) { .post-content h2 { font-size: 18.4px; } }
+
 /*# sourceMappingURL=custom.css.map */
