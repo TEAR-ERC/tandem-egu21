@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>tandem @ vEGU21 | Virtual display of the presentation “The discontinuous Galerkin method for sequences of earthquakes and aseismic slip” held at vEGU21.</title>
+<meta name="generator" content="Jekyll v4.2.0" />
+<meta property="og:title" content="tandem @ vEGU21" />
+<meta name="author" content="Carsten Uphoff" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Virtual display of the presentation “The discontinuous Galerkin method for sequences of earthquakes and aseismic slip” held at vEGU21." />
+<meta property="og:description" content="Virtual display of the presentation “The discontinuous Galerkin method for sequences of earthquakes and aseismic slip” held at vEGU21." />
+<link rel="canonical" href="/tandem-egu21/live" />
+<meta property="og:url" content="/tandem-egu21/live" />
+<meta property="og:site_name" content="tandem @ vEGU21" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="tandem @ vEGU21" />
+<script type="application/ld+json">
+{"description":"Virtual display of the presentation “The discontinuous Galerkin method for sequences of earthquakes and aseismic slip” held at vEGU21.","@type":"WebPage","headline":"tandem @ vEGU21","url":"/tandem-egu21/live","author":{"@type":"Person","name":"Carsten Uphoff"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/tandem-egu21/assets/main.css">
+  <link rel="stylesheet" href="/tandem-egu21/assets/css/custom.css">
+  <link rel="stylesheet" href="/tandem-egu21/assets/css/katex.min.css"><link type="application/atom+xml" rel="alternate" href="/tandem-egu21/feed.xml" title="tandem @ vEGU21" /></head>
+<body>
+
+    <main class="page-content" aria-label="Content">
+        <div class="box-16-9">
+            <div class="live-wrapper">
+                <h2 id="the-discontinuous-galerkin-method-for-sequences-of-earthquakes-and-aseismic-slip">The discontinuous Galerkin method for sequences of earthquakes and aseismic slip</h2>
+<p><strong>Carsten Uphoff</strong>, Dave May, Alice-Agnes Gabriel</p>
+
+<div class="columns_wrap">
+    <div class="column1">
+        <h3>SEAS modelling</h3>
+        <img src="/tandem-egu21/assets/img/seas_2.png" />
+    </div>
+    <div class="column2">
+        <h3>Method</h3>
+<img src="/tandem-egu21/assets/img/cosine_variable.png" style="float: right; height: 35vh; margin-right: 2em" />
+<div>
+      <ol>
+        <li>Symmetric Interior Penalty Galerkin</li>
+        <li>Curvilinear simplex meshes (<strong>2D</strong> = triangles, <strong>3D</strong> = tetrahedra)</li>
+        <li>Sub-cell material resolution</li>
+        <li>Adaptive Runge-Kutta in time</li>
+      </ol>
+    </div>
+<img src="/tandem-egu21/assets/img/regalbrett.png" style="float: right; height: 18vh; margin-right: 2em" />
+    </div>
+    <div class="column1">
+        <h3>High-order pays off</h3>
+        <img src="/tandem-egu21/assets/img/seas_tandem_p1_f0436cb_3.png" />
+    </div>
+    <div class="column2">
+        <h3>High-performance computing</h3>
+<div>
+      <p>Need to solve <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi mathvariant="bold-italic">u</mi><mo>=</mo><mi mathvariant="bold-italic">b</mi></mrow><annotation encoding="application/x-tex">A\bm{u}=\bm{b}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault">A</span><span class="mord"><span class="mord"><span class="mord boldsymbol">u</span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord"><span class="mord"><span class="mord boldsymbol">b</span></span></span></span></span></span> millions of times.</p>
+      <ol>
+        <li>P-Multigrid</li>
+        <li>Matrix-free operator &gt; 40% peak</li>
+        <li>Dimensional reduction: Discrete Green’s function</li>
+      </ol>
+
+      <span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi mathvariant="bold-italic">u</mi><mo>=</mo><mi mathvariant="bold-italic">b</mi><mo>=</mo><msub><mi mathvariant="bold-italic">b</mi><mn>0</mn></msub><mo>+</mo><msub><mi mathvariant="bold-italic">b</mi><mi>D</mi></msub><mi>t</mi><mo>+</mo><mi>B</mi><mi mathvariant="bold-italic">S</mi></mrow><annotation encoding="application/x-tex">A\bm{u} = \bm{b} = \bm{b}_0 + \bm{b}_D t + B\bm{S}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault">A</span><span class="mord"><span class="mord"><span class="mord boldsymbol">u</span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord"><span class="mord"><span class="mord boldsymbol">b</span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord"><span class="mord"><span class="mord boldsymbol">b</span></span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord"><span class="mord"><span class="mord boldsymbol">b</span></span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">D</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathdefault">t</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.68611em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05017em;">B</span><span class="mord"><span class="mord"><span class="mord boldsymbol" style="margin-right:0.05382em;">S</span></span></span></span></span></span></span>
+
+      <p>where <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold-italic">u</mi><mo>∈</mo><mi>D</mi><mi>N</mi></mrow><annotation encoding="application/x-tex">\bm{u} \in DN</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mord"><span class="mord"><span class="mord boldsymbol">u</span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">D</span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span></span></span></span>, <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold-italic">S</mi><mo>∈</mo><mo stretchy="false">(</mo><mi>D</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">\bm{S} \in (D-1)n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72521em;vertical-align:-0.0391em;"></span><span class="mord"><span class="mord"><span class="mord boldsymbol" style="margin-right:0.05382em;">S</span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.02778em;">D</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mord mathdefault">n</span></span></span></span>, and <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>≪</mo><mi>N</mi></mrow><annotation encoding="application/x-tex">n \ll N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≪</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span></span></span></span></p>
+
+    </div>
+    </div>
+</div>
+
+<h2 class="virtual-display-link">
+Check out the virtual display at <a href="https://tear-erc.github.io/tandem-egu21/">https://tear-erc.github.io/tandem-egu21/</a>
+</h2>
+
+            </div>
+        </div>
+    </main>
+
+  </body>
+
+</html>

@@ -36,4 +36,20 @@ table th, table td { padding: 0.4em 0.8em; }
 
 @media screen and (max-width: 800px) { .post-content h2 { font-size: 18.4px; } }
 
+.live-wrapper { padding: 0 2em; }
+
+.live-wrapper h2 { margin-bottom: 0; }
+
+.live-wrapper .column1, .live-wrapper .column2 { text-align: left; flex: 1; margin-bottom: 1.5em; }
+
+.live-wrapper .column1 img, .live-wrapper .column2 img { margin: 0 auto; display: block; height: calc(36vw * 9 / 16); text-align: center; }
+
+.live-wrapper .column1 { min-width: 50%; }
+
+.live-wrapper .column2 { min-width: 50%; }
+
+.live-wrapper .columns-wrap { margin-top: 0; }
+
+.virtual-display-link { padding: 0.3em; text-align: center; border: 3px black solid; }
+
 /*# sourceMappingURL=custom.css.map */
